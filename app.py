@@ -1,28 +1,28 @@
-# flask
+#flask
 
 from flask import Flask, render_template, request
 import joblib
-app=Flask(__name__)
+app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route("/",methods=["GET","POST"])
 def index():
-    r=request.form.get('q')
+    r = request.form.get("p")
     return(render_template("index.html"))
 
-@app.route('/main', methods=['GET', 'POST'])
+@app.route("/main",methods=["GET","POST"])
 def main():
     return(render_template("main.html"))
 
-@app.route('/dbs', methods=['GET', 'POST'])
+@app.route("/dbs",methods=["GET","POST"])
 def dbs():
     return(render_template("dbs.html"))
 
-@app.route('/DbsPrediction', methods=['GET', 'POST'])
+@app.route("/DbsPrediction",methods=["GET","POST"])
 def DbsPrediction():
-    q=float(request.form.get('q'))
-    model=joblib.load("DBS.il")
+    q = float(request.form.get("q"))
+    model=joblib.load("dbs.jl")
     r = model.predict([[q]])
-    return(render_template("DbsPrediction.html", r=r[0][0]))
+    return(render_template("DbsPrediction.html",r=r[0][0]))
 
 @app.route("/credit",methods=["GET","POST"])
 def credit():
@@ -39,5 +39,5 @@ def creditPrediction():
        r = "Not Approved"
     return(render_template("creditPrediction.html",r=r))
 
-if __name__ == "__main__":
+if __name__=="__main__":
     app.run()
